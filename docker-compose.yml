@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=radman
+      - POSTGRES_USER=r4dman
+      - POSTGRES_PASSWORD=secr3t
+  web:
+    image: docker.pkg.github.com/dbtek/radman/radman
+    environment:
+      - PORT=8000
+      - ALLOWED_HOSTS=localhost
+      - DATABASE_HOST=db
+      - DATABASE_USER=r4dman
+      - DATABASE_PASSWORD=secr3t
+      - DATABASE_NAME=radman
+    ports:
+      - "80:8000"
+    depends_on:
+      - db
