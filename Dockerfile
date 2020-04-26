@@ -6,12 +6,16 @@ ENV WORKDIR /app
 COPY Pipfile ${WORKDIR}/
 COPY Pipfile.lock ${WORKDIR}/
 
+RUN apk add --update postgresql-dev gcc python3-dev musl-dev
+
 RUN cd ${WORKDIR} \
     && pip install pipenv \
     && pipenv install --system
 
 # Create the final container with the app
 FROM tiangolo/uvicorn-gunicorn:${IMAGE_TAG}
+
+RUN apk add --update libpq
 
 ENV USER=docker \
     GROUP=docker \
