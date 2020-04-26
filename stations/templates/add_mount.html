@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Yeni Yayın Noktası{% endblock %}
+{% block body %}
+    <main>
+        <h1>Yeni Yayın Noktası</h1>
+        <form action="/stations/{{ station.id }}/add-mount/" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="button primary" type="submit" style="width: 100%;">
+                Kaydet
+            </button>
+        </form>
+    </main>
+{% endblock %}

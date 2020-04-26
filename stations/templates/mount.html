@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Yeni Yayın Noktası{% endblock %}
+{% block body %}
+    <main>
+        <h1>Yayın Noktası</h1>
+        <div>
+            <p>
+                <strong>Type:</strong> IceCast v2
+            </p>
+            <p>
+                <strong>Address:</strong> {{ mount.station.base_url }}
+            </p>
+            <p>
+                <strong>Port:</strong> {{ mount.station.port }}
+            </p>
+            <p>
+                <strong>Password:</strong> {{ mount.station.source_password }}
+            </p>
+            <p>
+                <strong>Mount:</strong> {{ mount.id }}
+            </p>
+            <p>
+                <strong>Username:</strong> source
+            </p>
+            <a class="button" href="/stations/{{ mount.station.id }}">Geri</a>
+            <a class="button primary" href="/play/{{ mount.id }}">Dinle</a>
+        </div>
+    </main>
+{% endblock %}

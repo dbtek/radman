@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block title %}{{ stationName }} - {{ mountName }}{% endblock %}
+{% block head %}
+    <style>
+        main {
+            margin: calc(50vh - 182px) auto 0;
+            min-height: unset;
+        }
+        h1 {
+            text-align: center;
+            font-weight: 400;
+        }
+        audio {
+            width: 100%;
+        }
+        .alert-content {
+            background: #eee;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            min-height: 30px;
+        }
+        .alert-content.error {
+            background: #e74c3c;
+            color: #fff;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <main>
+        <h1><strong>{{ stationName }}</strong>{{ mountName }}</h1>
+        <audio id="player" src="{{ streamUrl }}" controls autoplay>
+            <source type="audio/mp3" />
+        </audio>
+        <div class="alert"></div>
+    </main>
+    <script>
+        (function() {
+            const player = document.querySelector('#player');
+            const alert = document.querySelector('.alert');
+            let timeout;
+            let playing;
+
+            window.reload = function reload() {
+                clearTimeout(timeout);
+                console.log('reloading...')
+                alert.innerHTML = '<div class="alert-content">Yükleniyor.</div>';
+                setTimeout(function () {
+                    player.src = '{{ streamUrl }}';
+                    player.play();
+                    alert.innerHTML = '';
+                }, 500);
+
+            };
+
+            const offlineError = `
+                <div class="alert-content error">
+                    <span>Yayın kapalı, lütfen bekleyin.</span>
+                    <button class="button icon-button" title="Retry" onclick="reload()">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                    </button>
+                </div>
+            `
+
+            player.onerror = function(event) {
+                alert.innerHTML = offlineError;
+                timeout = setTimeout(reload, 30000); // retry after 30 secs
+            };
+
+            player.onended = function () {
+                alert.innerHTML = '<div class="alert-content">Bir sonraki yayında görüşmek üzere. Teşekkürler.</div>'
+            };
+        })();
+    </script>
+{% endblock %}
+{% block footer %}{% endblock %}

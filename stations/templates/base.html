@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <title>{% block title %}Title{%  endblock %}</title>
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px;
+            padding: 0;
+            margin: 0;
+        }
+        main {
+            max-width: 300px;
+            margin: 0 auto;
+            min-height: calc(100vh - 72px);
+        }
+        footer {
+            max-width: 300px;
+            margin: 0 auto;
+            padding: 1rem 0;
+        }
+        button, .button {
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            background: #eee;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            display: inline-block;
+        }
+        button.primary, .button.primary {
+            background: #2980b9;
+            color: #fff;
+        }
+        button:hover, .button:hover {
+            background: #ddd;
+            color: #2980b9;
+        }
+        .icon-button {
+            width: 32px;
+            border-radius: 50%;
+            height: 32px;
+            display: inline-flex;
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+        }
+        .button.primary {
+            fill: #fff;
+        }
+        .icon-button.primary {
+            background: #eee;
+            fill: #2980b9;
+        }
+        .icon-button.error-button svg{
+            fill: #e74c3c;
+        }
+        form p {
+            display: flex;
+            align-items: center;
+        }
+        input {
+            flex: 1;
+            border-radius: 4px;
+            border: 1px solid #999;
+            padding: 0.5rem 0.5rem;
+        }
+        label {
+            margin-right: 2rem;
+        }
+        a {
+            text-decoration: none;
+            color: #2980b9;
+        }
+    </style>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    {% block body %}{% endblock %}
+    {% block footer %}
+        <footer>
+            Radman © 2020
+        </footer>
+    {% endblock %}
+</body>
+</html>
