@@ -16,9 +16,9 @@ services:
       - DATABASE_USER=r4dman
       - DATABASE_PASSWORD=secr3t
       - DATABASE_NAME=radman
-      - BIND="127.0.0.1:1880" 
-    ports:
-      - "1880:8000"
+      - DJANGO_SETTINGS_MODULE=radman.settings.prod
+    expose:
+      - 8000
     depends_on:
       - db
   proxy:

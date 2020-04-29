@@ -1,7 +1,10 @@
 #! /usr/bin/env bash
 
 # Let the DB start
-sleep 10;
+echo "Waiting for postgres..."
+while ! nc -z $DATABASE_HOST $DATABASE_PORT; do
+  sleep 0.1
+done
 
 # Run migrations
-DJANGO_SETTINGS_MODULE=radman.settings.prod python manage.py migrate
+python manage.py migrate
