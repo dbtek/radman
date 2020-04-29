@@ -1,4 +1,4 @@
-## radman
+## radman
 
 Basic django app to manage stations & mounts of Azuracast for private streams.
 
