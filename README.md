@@ -1,14 +1,14 @@
 ## radman
 
-Basic django app to manage stations & mounts of Azuracast for private streams.
+Basic django app to manage stations & mounts of Azuracast for private streams. Supports only IceCast.
 
 ### Features
 - UUID based naming.
 - Custom player page.
+- Optional stream password protection.
 
 ### To Do
 - Stations add / remove through API.
-- Stream password protection.
 
 ### Development
 ```bash
