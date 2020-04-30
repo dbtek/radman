@@ -3,9 +3,11 @@
 Basic django app to manage stations & mounts of Azuracast for private streams. Supports only IceCast.
 
 ### Features
+- Mount adding through Azuracast API.
 - UUID based naming.
 - Custom player page.
 - Optional stream password protection.
+- Configuration file generation for Butt.
 
 ### To Do
 - Stations add / remove through API.
