@@ -45,7 +45,7 @@ icy = {mountName}
 icy_ent = {mountName}
 num_of_icy = 1
 
-[{host}]
+[{stationName}]
 address = {host}
 port = {port}
 password = {password}
