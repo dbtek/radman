@@ -2,8 +2,9 @@
 {% block title %}Yeni Yayın Noktası{% endblock %}
 {% block body %}
     <main>
-        <h1>Yayın Noktası</h1>
+        <h1>Yayın Noktası: {{mount.name}}</h1>
         <div>
+            <h3>Bağlantı Bilgileri</h3>
             <p>
                 <strong>Type:</strong> IceCast v2
             </p>
@@ -23,6 +24,7 @@
                 <strong>Username:</strong> source
             </p>
             <a class="button" href="/stations/{{ mount.station.id }}">Geri</a>
+            <a class="button" href="/mounts/{{ mount.id }}/edit/">Düzenle</a>
             <a class="button primary" href="/play/{{ mount.id }}">Dinle</a>
         </div>
     </main>

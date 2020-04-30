@@ -44,12 +44,12 @@ def add_mount(request, uuid):
             mount_path = uuid4()
 
             az_mount = azuracast.add_mount(s.station_id, {
-              'name': mount_path,
-              'display_name': mount_path,
-              'is_visible_on_public_pages': False,
-              'is_default': False,
-              'is_public': False,
-              'enable_autodj': False
+                'name': mount_path,
+                'display_name': mount_path,
+                'is_visible_on_public_pages': False,
+                'is_default': False,
+                'is_public': False,
+                'enable_autodj': False
             })
 
             m = Mount.objects.create(id=mount_path, name=name, station=s, mount_id=az_mount['id']);

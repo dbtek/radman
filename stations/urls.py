@@ -1,9 +1,9 @@
 from django.urls import path
 
-from stations.views import add_mount, station, mount
+from stations import views
 
 urlpatterns = [
-    path('stations/<uuid:uuid>/', station),
-    path('stations/<uuid:uuid>/add-mount/', add_mount),
-    path('mounts/<uuid:uuid>/', mount),
+    path('stations/<uuid:uuid>/', views.station),
+    path('stations/<uuid:uuid>/add-mount/', views.add_mount),
+    path('mounts/<uuid:uuid>/', views.mount),
 ]

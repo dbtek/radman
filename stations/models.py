@@ -1,5 +1,9 @@
 import uuid
 from django.db import models
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+
+from stations.password import hash_password
 
 
 class Station(models.Model):
@@ -21,9 +25,15 @@ class Mount(models.Model):
     name = models.CharField(max_length=200)
     mount_id = models.IntegerField()
     station = models.ForeignKey(to=Station, on_delete=models.PROTECT)
+    password = models.CharField(max_length=100, null=True, blank=True)
 
     def get_stream_url(self):
         return '%s/radio/%s/%s' % (self.station.base_url, self.station.port, self.id)
 
     def __str__(self):
         return self.name
+
+
+@receiver(pre_save, sender=Mount)
+def mount_pre_save(sender, instance, *args, **kwargs):
+    instance.password = hash_password(instance.password)
