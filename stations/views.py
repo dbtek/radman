@@ -26,7 +26,7 @@ def mount(request, uuid):
     except Mount.DoesNotExist:
         raise Http404("Mount does not exist")
 
-    return render(request, 'mount.html', {'mount': m})
+    return render(request, 'mount.html', {'mount': m, 'host': urlparse(m.station.base_url).netloc})
 
 
 def download_config(request, uuid):
@@ -59,11 +59,13 @@ usr = source
 pub = 0
 description = {mountName}
 genre = misc
-    """.format(stationName=m.station.name, mountName=m.name, host=urlparse(m.station.base_url).netloc, port=m.station.port, mount=m.id, password=m.station.source_password)
+    """.format(stationName=m.station.name, mountName=m.name, host=urlparse(m.station.base_url).netloc,
+               port=m.station.port, mount=m.id, password=m.station.source_password)
 
     response = HttpResponse(config, content_type="application/text")
     response['Content-Disposition'] = 'inline; filename=' + os.path.basename(m.name + '.txt')
     return response
+
 
 def add_mount(request, uuid):
     try:
