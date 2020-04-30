@@ -41,6 +41,7 @@ def add_mount(request, uuid):
         if form.is_valid():
             azuracast = AzuracastClient(s.base_url, s.api_key)
             name = request.POST['name']
+            password = request.POST['password']
             mount_path = uuid4()
 
             az_mount = azuracast.add_mount(s.station_id, {
@@ -52,7 +53,7 @@ def add_mount(request, uuid):
                 'enable_autodj': False
             })
 
-            m = Mount.objects.create(id=mount_path, name=name, station=s, mount_id=az_mount['id']);
+            m = Mount.objects.create(id=mount_path, name=name, password=password, station=s, mount_id=az_mount['id']);
 
             return HttpResponseRedirect('/mounts/%s' % m.id)
 

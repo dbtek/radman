@@ -36,4 +36,5 @@ class Mount(models.Model):
 
 @receiver(pre_save, sender=Mount)
 def mount_pre_save(sender, instance, *args, **kwargs):
-    instance.password = hash_password(instance.password)
+    if instance.password:
+        instance.password = hash_password(instance.password)
