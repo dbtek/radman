@@ -1,4 +1,5 @@
 import os
+from urllib.parse import urlparse
 from uuid import uuid4
 
 from django.http import Http404, HttpResponseRedirect, HttpResponse
@@ -58,7 +59,7 @@ usr = source
 pub = 0
 description = {mountName}
 genre = misc
-    """.format(stationName=m.station.name, mountName=m.name, host=m.station.base_url, port=m.station.port, mount=m.id, password=m.station.source_password)
+    """.format(stationName=m.station.name, mountName=m.name, host=urlparse(m.station.base_url).netloc, port=m.station.port, mount=m.id, password=m.station.source_password)
 
     response = HttpResponse(config, content_type="application/text")
     response['Content-Disposition'] = 'inline; filename=' + os.path.basename(m.name + '.txt')
