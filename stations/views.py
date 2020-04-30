@@ -61,3 +61,28 @@ def add_mount(request, uuid):
         form = MountForm()
 
     return render(request, 'add_mount.html', {'form': form, 'station': s})
+
+
+def edit_mount(request, uuid):
+    try:
+        m = Mount.objects.get(pk=uuid)
+    except Mount.DoesNotExist:
+        raise Http404("Mount does not exist")
+
+    # POST request, process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = MountForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            m.name = request.POST['name']
+            m.password = request.POST['password']
+            m.save()
+
+            return HttpResponseRedirect('/mounts/%s' % m.id)
+
+    # get request render form
+    else:
+        form = MountForm({"name": m.name})
+
+    return render(request, 'edit_mount.html', {'form': form, 'mount': m})

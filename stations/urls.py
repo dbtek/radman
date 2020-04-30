@@ -6,4 +6,5 @@ urlpatterns = [
     path('stations/<uuid:uuid>/', views.station),
     path('stations/<uuid:uuid>/add-mount/', views.add_mount),
     path('mounts/<uuid:uuid>/', views.mount),
+    path('mounts/<uuid:uuid>/edit/', views.edit_mount),
 ]
