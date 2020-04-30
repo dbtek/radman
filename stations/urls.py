@@ -7,4 +7,5 @@ urlpatterns = [
     path('stations/<uuid:uuid>/add-mount/', views.add_mount),
     path('mounts/<uuid:uuid>/', views.mount),
     path('mounts/<uuid:uuid>/edit/', views.edit_mount),
+    path('mounts/<uuid:uuid>/butt/', views.download_config),
 ]

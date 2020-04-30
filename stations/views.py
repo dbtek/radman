@@ -1,6 +1,7 @@
+import os
 from uuid import uuid4
 
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
 from azuracast import AzuracastClient
@@ -26,6 +27,42 @@ def mount(request, uuid):
 
     return render(request, 'mount.html', {'mount': m})
 
+
+def download_config(request, uuid):
+    try:
+        m = Mount.objects.get(pk=uuid)
+    except Mount.DoesNotExist:
+        raise Http404("Mount does not exist")
+
+    config = """
+#This is a configuration file for butt (broadcast using this tool)
+[main]
+server = {stationName}
+srv_ent = {stationName}
+gain = 1.000000
+num_of_srv = 1
+icy = {mountName}
+icy_ent = {mountName}
+num_of_icy = 1
+
+[{host}]
+address = {host}
+port = {port}
+password = {password}
+type = 1
+tls = 1
+mount = {mount}
+usr = source
+
+[{mountName}]
+pub = 0
+description = {mountName}
+genre = misc
+    """.format(stationName=m.station.name, mountName=m.name, host=m.station.base_url, port=m.station.port, mount=m.id, password=m.station.source_password)
+
+    response = HttpResponse(config, content_type="application/text")
+    response['Content-Disposition'] = 'inline; filename=' + os.path.basename(m.name + '.txt')
+    return response
 
 def add_mount(request, uuid):
     try:
