@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Web player{% endblock %}
+{% block head %}
+    <style>
+        main {
+            margin: calc(50vh - 200px) auto 0;
+            min-height: unset;
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            font-weight: 400;
+        }
+        h4 {
+            text-align: center;
+        }
+        .errorlist {
+            background: #e74c3c;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            list-style: none;
+            position: absolute;
+            bottom: -65px;
+            width: calc(100% - 2rem);
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <main>
+        <h1>Hoş geldiniz</h1>
+        <h4>Lütfen bilgilerinizi giriniz.</h4>
+        <form action="/play/{{ mountId }}/" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="button primary" type="submit" style="width: 100%;">
+                Giriş
+            </button>
+        </form>
+    </main>
+{% endblock %}
+{% block footer %}{% endblock %}
