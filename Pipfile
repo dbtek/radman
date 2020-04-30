@@ -17,6 +17,8 @@ urllib3 = "==1.25.9"
 Django = "==3.0.5"
 whitenoise = "*"
 psycopg2 = "*"
+django-qr-code = "*"
+furl = "*"
 
 [requires]
 python_version = "3.7"

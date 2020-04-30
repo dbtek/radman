@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "cfec06d0d08a095897ebfb65e0bebbfc65ee191f504b29aa7010f9ef298e4714"
+            "sha256": "3c08efa48930fde12af474032ef9407a5ab4974a109f74aa6d3cf74cb40096fb"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -48,6 +48,22 @@
             "index": "pypi",
             "version": "==3.0.5"
         },
+        "django-qr-code": {
+            "hashes": [
+                "sha256:873a91044b60c27380ae6b6ca5267d6f076b8310734561792f3a42842b43b398",
+                "sha256:caae4b4f859742f24d89b0abd43c3b94ab7064c127340c7fecd6173345257907"
+            ],
+            "index": "pypi",
+            "version": "==1.2.0"
+        },
+        "furl": {
+            "hashes": [
+                "sha256:c0e0231a1feee2acd256574b7033df3144775451c610cb587060d6a0d7e0b621",
+                "sha256:f4d6f1e5479c376a5b7bdc62795d736d8c1b2a754f366a2ad2816e46e946e22e"
+            ],
+            "index": "pypi",
+            "version": "==2.1.0"
+        },
         "idna": {
             "hashes": [
                 "sha256:7588d1c14ae4c77d74036e8c22ff447b26d0fde8f007354fd48a7814db15b7cb",
@@ -55,6 +71,13 @@
             ],
             "index": "pypi",
             "version": "==2.9"
+        },
+        "orderedmultidict": {
+            "hashes": [
+                "sha256:04070bbb5e87291cc9bfa51df413677faf2141c73c61d2a5f7b26bea3cd882ad",
+                "sha256:43c839a17ee3cdd62234c47deca1a8508a3f2ca1d0678a3bf791c87cf84adbf3"
+            ],
+            "version": "==1.0.1"
         },
         "psycopg2": {
             "hashes": [
@@ -83,6 +106,13 @@
             "index": "pypi",
             "version": "==2019.3"
         },
+        "qrcode": {
+            "hashes": [
+                "sha256:3996ee560fc39532910603704c82980ff6d4d5d629f9c3f25f34174ce8606cf5",
+                "sha256:505253854f607f2abf4d16092c61d4e9d511a3b4392e60bff957a68592b04369"
+            ],
+            "version": "==6.1"
+        },
         "requests": {
             "hashes": [
                 "sha256:43999036bfa82904b6af1d99e4882b560e5e2c68e5c4b0aa03b655f3d7d73fee",
@@ -90,6 +120,13 @@
             ],
             "index": "pypi",
             "version": "==2.23.0"
+        },
+        "six": {
+            "hashes": [
+                "sha256:236bdbdce46e6e6a3d61a337c0f8b763ca1e8717c03b369e87a7ec7ce1319c0a",
+                "sha256:8f3cd2e254d8f793e7f3d6d9df77b92252b52637291d0f0da013c76ea2724b6c"
+            ],
+            "version": "==1.14.0"
         },
         "sqlparse": {
             "hashes": [

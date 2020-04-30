@@ -1,9 +1,10 @@
 import os
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlunparse
 from uuid import uuid4
 
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
+from furl import furl
 
 from azuracast import AzuracastClient
 from stations.forms import MountForm
@@ -26,7 +27,15 @@ def mount(request, uuid):
     except Mount.DoesNotExist:
         raise Http404("Mount does not exist")
 
-    return render(request, 'mount.html', {'mount': m, 'host': urlparse(m.station.base_url).netloc})
+    hurl = urlparse(m.station.base_url)
+
+    surl = furl(m.station.base_url)
+    surl.username = 'source'
+    surl.password = m.station.source_password
+    surl.port = m.station.port
+    surl.path = m.id.__str__()
+
+    return render(request, 'mount.html', {'mount': m, 'host': hurl.netloc, 'coolmic_url': surl})
 
 
 def download_config(request, uuid):

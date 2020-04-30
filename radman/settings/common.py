@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'stations',
     'webplayer',
+    'qr_code',
 ]
 
 MIDDLEWARE = [
