@@ -25,7 +25,7 @@ class Mount(models.Model):
     name = models.CharField(max_length=200)
     mount_id = models.IntegerField()
     station = models.ForeignKey(to=Station, on_delete=models.PROTECT)
-    password = models.CharField(max_length=100, null=True, blank=True)
+    password = models.CharField(max_length=500, null=True, blank=True)
 
     def get_stream_url(self):
         return '%s/radio/%s/%s' % (self.station.base_url, self.station.port, self.id)
