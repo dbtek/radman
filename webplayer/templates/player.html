@@ -48,12 +48,9 @@
                 clearTimeout(timeout);
                 console.log('reloading...')
                 alert.innerHTML = '<div class="alert-content">Yükleniyor.</div>';
-                setTimeout(function () {
-                    player.src = '{{ streamUrl }}';
-                    player.play();
-                    alert.innerHTML = '';
-                }, 500);
-
+                player.src = '{{ streamUrl }}';
+                player.play();
+                alert.innerHTML = '';
             };
 
             const offlineError = `
@@ -67,7 +64,7 @@
 
             player.onerror = function(event) {
                 alert.innerHTML = offlineError;
-                timeout = setTimeout(reload, 30000); // retry after 30 secs
+                timeout = setTimeout(reload, 3000); // retry after 3 secs
             };
 
             player.onended = function () {
@@ -79,6 +76,7 @@
                         </button>
                     </div>
                 `;
+                timeout = setTimeout(reload, 3000); // retry after 3 secs
             };
         })();
     </script>
