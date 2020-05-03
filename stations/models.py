@@ -25,6 +25,8 @@ class Mount(models.Model):
     name = models.CharField(max_length=200)
     mount_id = models.IntegerField()
     station = models.ForeignKey(to=Station, on_delete=models.PROTECT)
+    mount_point = models.UUIDField(null=True, blank=True, unique=True)
+    slug = models.CharField(null=True, blank=True, unique=True, max_length=6)
     password = models.CharField(max_length=500, null=True, blank=True)
 
     def get_stream_url(self):
