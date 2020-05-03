@@ -31,11 +31,7 @@ def player_slim(request, slug):
                 # get mount token from session
                 password = request.session[password_sess_key]
                 # do password check
-                if not verify_password(m.password, password):
-                    form = PlayerForm(None)
-                    form.add_error('password', 'Şifre doğru değil.')
-                    return render(request, 'player_form.html', {'action': '/p/%s/' % m.slug, 'form': form})
-                else:
+                if verify_password(m.password, password):
                     return render_player(request, m)
 
             form = PlayerForm(None)
@@ -67,11 +63,7 @@ def player(request, uuid):
                 # get mount token from session
                 password = request.session[password_sess_key]
                 # do password check
-                if not verify_password(m.password, password):
-                    form = PlayerForm(None)
-                    form.add_error('password', 'Şifre doğru değil.')
-                    return render(request, 'player_form.html', {'action': '/play/%s/' % m.id, 'form': form})
-                else:
+                if verify_password(m.password, password):
                     return render_player(request, m)
 
             form = PlayerForm(None)

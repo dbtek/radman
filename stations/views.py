@@ -140,6 +140,6 @@ def edit_mount(request, uuid):
 
     # get request render form
     else:
-        form = MountForm({"name": m.name})
+        form = MountForm({"name": m.name, 'slug': m.slug, 'password': m.password})
 
     return render(request, 'edit_mount.html', {'form': form, 'mount': m})
