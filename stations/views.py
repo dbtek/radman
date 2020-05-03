@@ -91,6 +91,8 @@ def add_mount(request, uuid):
             azuracast = AzuracastClient(s.base_url, s.api_key)
             name = request.POST['name']
             password = request.POST['password']
+            if password == '':
+                password = None
             mount_path = uuid4()
 
             az_mount = azuracast.add_mount(s.station_id, {
@@ -126,7 +128,10 @@ def edit_mount(request, uuid):
         # check whether it's valid:
         if form.is_valid():
             m.name = request.POST['name']
-            m.password = request.POST['password']
+            password = request.POST['password']
+            if password == '':
+                password = None
+            m.password = password
             m.save()
 
             return HttpResponseRedirect('/mounts/%s' % m.id)
