@@ -1,3 +1,3 @@
 from .common import *
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
