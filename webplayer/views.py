@@ -11,6 +11,8 @@ def player_slim(request, slug):
     except Mount.DoesNotExist:
         raise Http404("Kanal bulunamadı")
 
+    password_sess_key = 'password_%s' % m.id
+
     if m.password is None:
         return render_player(request, m)
     else:
@@ -22,12 +24,12 @@ def player_slim(request, slug):
                 form.add_error('password', 'Şifre doğru değil.')
                 return render(request, 'player_form.html', {'action': '/p/%s/' % m.slug, 'form': form})
             else:
-                request.session['password'] = password
+                request.session[password_sess_key] = password
                 return render_player(request, m)
         else:
-            if 'password' in request.session:
+            if password_sess_key in request.session:
                 # get mount token from session
-                password = request.session['password']
+                password = request.session[password_sess_key]
                 # do password check
                 if not verify_password(m.password, password):
                     form = PlayerForm(None)
@@ -45,6 +47,8 @@ def player(request, uuid):
     except Mount.DoesNotExist:
         raise Http404("Kanal bulunamadı")
 
+    password_sess_key = 'password_%s' % m.id
+
     if m.password is None:
         return render_player(request, m)
     else:
@@ -56,12 +60,12 @@ def player(request, uuid):
                 form.add_error('password', 'Şifre doğru değil.')
                 return render(request, 'player_form.html', {'action': '/play/%s/' % m.id, 'form': form})
             else:
-                request.session['password'] = password
+                request.session[password_sess_key] = password
                 return render_player(request, m)
         else:
-            if 'password' in request.session:
+            if password_sess_key in request.session:
                 # get mount token from session
-                password = request.session['password']
+                password = request.session[password_sess_key]
                 # do password check
                 if not verify_password(m.password, password):
                     form = PlayerForm(None)
