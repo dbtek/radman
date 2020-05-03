@@ -23,14 +23,26 @@ def player(request, uuid):
         return render_player()
     else:
         if request.POST:
+            password = request.POST['password']
             # do password check
-            validpass = verify_password(m.password, request.POST['password'])
-            if not validpass:
+            if not verify_password(m.password, password):
                 form = PlayerForm(request.POST)
                 form.add_error('password', 'Şifre doğru değil.')
                 return render(request, 'player_form.html', {'mountId': m.id, 'form': form})
             else:
+                request.session['password'] = password
                 return render_player()
         else:
+            if 'password' in request.session:
+                # get password from session
+                password = request.session['password']
+                # do password check
+                if not verify_password(m.password, password):
+                    form = PlayerForm(None)
+                    form.add_error('password', 'Şifre doğru değil.')
+                    return render(request, 'player_form.html', {'mountId': m.id, 'form': form})
+                else:
+                    return render_player()
+
             form = PlayerForm(None)
             return render(request, 'player_form.html', {'mountId': m.id, 'form': form})
