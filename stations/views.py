@@ -93,6 +93,7 @@ def add_mount(request, uuid):
             password = request.POST['password']
             if password == '':
                 password = None
+            slug = request.POST['slug']
             mount_path = uuid4()
 
             az_mount = azuracast.add_mount(s.station_id, {
@@ -104,7 +105,7 @@ def add_mount(request, uuid):
                 'enable_autodj': False
             })
 
-            m = Mount.objects.create(id=mount_path, name=name, password=password, station=s, mount_id=az_mount['id']);
+            m = Mount.objects.create(id=mount_path, name=name, password=password, station=s, mount_point=mount_path, slug=slug, mount_id=az_mount['id']);
 
             return HttpResponseRedirect('/mounts/%s' % m.id)
 
@@ -132,6 +133,7 @@ def edit_mount(request, uuid):
             if password == '':
                 password = None
             m.password = password
+            m.slug = request.POST['slug']
             m.save()
 
             return HttpResponseRedirect('/mounts/%s' % m.id)
