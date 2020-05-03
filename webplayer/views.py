@@ -2,7 +2,7 @@ from django.http import Http404
 from django.shortcuts import render
 
 from stations.models import Mount
-from stations.password import verify_password
+from stations.password import verify_password, hash_password
 from webplayer.forms import PlayerForm
 
 
@@ -10,7 +10,7 @@ def player(request, uuid):
     try:
         m = Mount.objects.get(pk=uuid)
     except Mount.DoesNotExist:
-        raise Http404("Mount does not exist")
+        raise Http404("Kanal bulunamadı")
 
     def render_player():
         return render(request, 'player.html', {
@@ -33,11 +33,11 @@ def player(request, uuid):
                 request.session['password'] = password
                 return render_player()
         else:
-            if 'password' in request.session:
-                # get password from session
-                password = request.session['password']
+            if 'mount_token' in request.session:
+                # get mount token from session
+                mount_token = request.session['mount_token']
                 # do password check
-                if not verify_password(m.password, password):
+                if not hash_password(m.password) == mount_token:
                     form = PlayerForm(None)
                     form.add_error('password', 'Şifre doğru değil.')
                     return render(request, 'player_form.html', {'mountId': m.id, 'form': form})
