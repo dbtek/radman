@@ -19,6 +19,8 @@ whitenoise = "*"
 psycopg2 = "*"
 django-qr-code = "*"
 furl = "*"
+xlwt = "*"
+geoip2 = "*"
 
 [requires]
 python_version = "3.7"
