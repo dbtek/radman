@@ -27,22 +27,34 @@
             background: #e74c3c;
             color: #fff;
         }
+        .description {
+            margin: 1rem;
+            padding: 0.5rem 1rem;
+            text-align: center;
+        }
     </style>
 {% endblock %}
 {% block body %}
     <main>
         <h1><strong>{{ stationName }}</strong>{{ mountName }}</h1>
+        <div class="description">{{ mountDescription }}</div>
         <audio id="player" src="{{ streamUrl }}" controls autoplay>
             <source type="audio/mp3" />
         </audio>
         <div class="alert"></div>
+        <button class="button has-icon" title="Sayfayı yenile" onclick="refreshPage()" style="position: absolute; bottom: 38%; left: calc(50% - 80px); display: flex; width: 180px; margin: 1rem auto;">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+            <span>Sayfayı yenile</span>
+        </button>
     </main>
     <script>
+        function refreshPage() {
+            window.location.reload();
+        }
         (function() {
             const player = document.querySelector('#player');
             const alert = document.querySelector('.alert');
             let timeout;
-            let playing;
 
             window.reload = function reload() {
                 clearTimeout(timeout);
@@ -71,7 +83,7 @@
                 alert.innerHTML = `
                     <div class="alert-content">
                         <span>Yayın bitti, teşekkürler.</span>
-                        <button class="button icon-button" title="Retry" onclick="reload()">
+                        <button class="button icon-button" title="Yeniden dene" onclick="reload()">
                             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                         </button>
                     </div>

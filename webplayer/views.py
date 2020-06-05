@@ -5,6 +5,7 @@ from stations.models import Mount
 from stations.password import verify_password, hash_password
 from webplayer.forms import PlayerForm
 
+
 def player_slim(request, slug):
     try:
         m = Mount.objects.get(slug=slug)
@@ -36,6 +37,7 @@ def player_slim(request, slug):
 
             form = PlayerForm(None)
             return render(request, 'player_form.html', {'action': '/p/%s/' % m.slug, 'form': form})
+
 
 def player(request, uuid):
     try:
@@ -74,5 +76,6 @@ def render_player(request, m):
     return render(request, 'player.html', {
         'stationName': m.station.name,
         'mountName': m.name,
+        'mountDescription': m.description,
         'streamUrl': m.get_stream_url()
     })
