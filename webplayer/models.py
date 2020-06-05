@@ -1,7 +1,7 @@
 from django.contrib.gis.geoip2 import GeoIP2
 from django.db import models
 from django.utils.safestring import mark_safe
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext as _
 
 from stations.models import Mount
 

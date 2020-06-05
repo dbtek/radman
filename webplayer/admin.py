@@ -12,7 +12,7 @@ from webplayer.models import ListenerLog
 
 @admin.register(ListenerLog)
 class ListenerLogAdmin(admin.ModelAdmin):
-    list_display = ('name', 'organization', 'ip')
+    list_display = ('name', 'organization', 'ip', 'updated')
     search_fields = ('name', 'organization')
     ordering = ('-updated',)
     actions = [export_xls]

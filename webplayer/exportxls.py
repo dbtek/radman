@@ -1,6 +1,6 @@
 import xlwt
 from django.http import HttpResponse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext as _
 from xlwt.compat import xrange
 
 
