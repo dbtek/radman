@@ -81,6 +81,20 @@
             text-decoration: none;
             color: #2980b9;
         }
+        .alert-content {
+            background: #eee;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            min-height: 30px;
+        }
+        .alert-content.error {
+            background: #e74c3c;
+            color: #fff;
+        }
     </style>
     {% block head %}{% endblock %}
 </head>

@@ -33,7 +33,7 @@ def create_log(request, mount, name, organization):
 
 def player_slim(request, slug):
     try:
-        m = Mount.objects.get(slug=slug)
+        m = Mount.objects.get(slug=slug, active=True)
     except Mount.DoesNotExist:
         raise Http404("Kanal bulunamadı")
 
