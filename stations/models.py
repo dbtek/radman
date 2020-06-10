@@ -26,19 +26,27 @@ class Mount(models.Model):
     mount_id = models.IntegerField()
     station = models.ForeignKey(to=Station, on_delete=models.PROTECT)
     mount_point = models.UUIDField(null=True, blank=True, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Player(models.Model):
+    name = models.CharField(max_length=200)
+    mount = models.ForeignKey(Mount, verbose_name=_('Mount'), on_delete=models.PROTECT)
     slug = models.CharField(null=True, blank=True, unique=True, max_length=6)
     password = models.CharField(max_length=500, null=True, blank=True)
     description = models.TextField(max_length=500, null=True, blank=True)
     active = models.BooleanField(verbose_name=_('Active'), default=True)
 
     def get_stream_url(self):
-        return '%s/radio/%s/%s' % (self.station.base_url, self.station.port, self.id)
+        return '%s/radio/%s/%s' % (self.mount.station.base_url, self.mount.station.port, self.mount.mount_point)
 
     def __str__(self):
         return self.name
 
 
-@receiver(pre_save, sender=Mount)
-def mount_pre_save(sender, instance, *args, **kwargs):
+@receiver(pre_save, sender=Player)
+def player_pre_save(sender, instance, *args, **kwargs):
     if instance.password:
         instance.password = hash_password(instance.password)

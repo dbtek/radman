@@ -4,7 +4,7 @@ from django.http import Http404
 from django.shortcuts import render
 from django.utils.timezone import now
 
-from stations.models import Mount
+from stations.models import Mount, Player
 from stations.password import verify_password, hash_password
 from webplayer.forms import PlayerForm
 from webplayer.models import ListenerLog
@@ -20,66 +20,67 @@ def get_client_ip(request):
     return ip, browser
 
 
-def create_log(request, mount, name, organization):
+def create_log(request, player, name, organization):
     timewindow = now() - timedelta(minutes=45)
     ip, browser = get_client_ip(request)
-    log = ListenerLog.objects.filter(mount=mount, ip=ip, browser=browser,
+    log = ListenerLog.objects.filter(player=player, ip=ip, browser=browser,
                                      name=name, organization=organization,
                                      updated__gt=timewindow).first()
     if not log:
-        ListenerLog.objects.create(mount=mount, ip=ip, browser=browser,
+        ListenerLog.objects.create(player=player, ip=ip, browser=browser,
                                    organization=organization, name=name)
 
 
 def player_slim(request, slug):
     try:
-        m = Mount.objects.get(slug=slug, active=True)
-    except Mount.DoesNotExist:
+        p = Player.objects.get(slug=slug)
+    except Player.DoesNotExist:
         raise Http404("Kanal bulunamadı")
 
-    password_sess_key = 'password_%s' % m.id
-    name_sess_key = 'name_%s' % m.id
-    organization_sess_key = 'organization_%s' % m.id
+    password_sess_key = 'password_%s' % p.id
+    name_sess_key = 'name_%s' % p.id
+    organization_sess_key = 'organization_%s' % p.id
 
-    if m.password is None:
-        return render_player(request, m)
+    if p.password is None:
+        return render_player(request, p)
     else:
         if request.POST:
             password = request.POST['password']
             name = request.POST['name']
             organization = request.POST['organization']
             # do password check
-            if not verify_password(m.password, password):
+            if not verify_password(p.password, password):
                 form = PlayerForm(request.POST)
                 form.add_error('password', 'Şifre doğru değil.')
-                return render(request, 'player_form.html', {'action': '/p/%s/' % m.slug, 'form': form})
+                return render(request, 'player_form.html', {'action': '/p/%s/' % p.slug, 'form': form})
             else:
                 request.session[password_sess_key] = password
                 request.session[name_sess_key] = name
                 request.session[organization_sess_key] = organization
-                create_log(request, m, name, organization)
+                create_log(request, p, name, organization)
 
-                return render_player(request, m)
+                return render_player(request, p)
         else:
             if password_sess_key in request.session and name_sess_key in request.session and organization_sess_key in request.session:
                 # get mount token from session
                 password = request.session[password_sess_key]
                 name = request.session[name_sess_key]
                 organization = request.session[organization_sess_key]
-                create_log(request, m, name, organization)
+                create_log(request, p, name, organization)
 
                 # do password check
-                if verify_password(m.password, password):
-                    return render_player(request, m)
+                if verify_password(p.password, password):
+                    return render_player(request, p)
 
             form = PlayerForm(None)
-            return render(request, 'player_form.html', {'action': '/p/%s/' % m.slug, 'form': form})
+            return render(request, 'player_form.html', {'action': '/p/%s/' % p.slug, 'form': form})
 
 
-def render_player(request, m):
+def render_player(request, p):
     return render(request, 'player.html', {
-        'stationName': m.station.name,
-        'mountName': m.name,
-        'mountDescription': m.description or '',
-        'streamUrl': m.get_stream_url()
+        'stationName': p.mount.station.name,
+        'playerName': p.name,
+        'mountName': p.mount.name,
+        'playerDescription': p.description or '',
+        'streamUrl': p.get_stream_url()
     })

@@ -3,11 +3,11 @@ from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
-from stations.models import Mount
+from stations.models import Player
 
 
 class ListenerLog(models.Model):
-    mount = models.ForeignKey(Mount, models.CASCADE, verbose_name=_('Mount'), null=True, blank=True, )
+    player = models.ForeignKey(Player, models.CASCADE, verbose_name=_('Player'), null=True, blank=True, )
     ip = models.CharField(_('ip'), max_length=100)
     browser = models.TextField(_('Web Browser'), blank=True, null=True)
     organization = models.TextField(_('Organization'), blank=True, null=True)
