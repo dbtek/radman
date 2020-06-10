@@ -1,8 +1,12 @@
 import uuid
+from uuid import uuid4
+
 from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.utils.translation import gettext as _
+
+from azuracast import AzuracastClient
 from stations.password import hash_password
 
 
@@ -29,6 +33,25 @@ class Mount(models.Model):
 
     def __str__(self):
         return self.name
+
+
+@receiver(pre_save, sender=Mount)
+def mount_pre_save(sender, instance, *args, **kwargs):
+    if instance._state.adding:
+        azuracast = AzuracastClient(instance.station.base_url, instance.station.api_key)
+        mount_path = uuid4()
+
+        az_mount = azuracast.add_mount(instance.station.station_id, {
+            'name': mount_path,
+            'display_name': mount_path,
+            'is_visible_on_public_pages': False,
+            'is_default': False,
+            'is_public': False,
+            'enable_autodj': False
+        })
+
+        instance.mount_point = mount_path
+        instance.mount_id = az_mount['id']
 
 
 class Player(models.Model):

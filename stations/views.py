@@ -7,7 +7,6 @@ from django.shortcuts import render
 from furl import furl
 
 from azuracast import AzuracastClient
-from stations.forms import MountForm
 from stations.models import Mount, Station
 
 
@@ -74,72 +73,3 @@ genre = misc
     response = HttpResponse(config, content_type="application/text")
     response['Content-Disposition'] = 'inline; filename=' + os.path.basename(m.name + '.txt')
     return response
-
-
-def add_mount(request, uuid):
-    try:
-        s = Station.objects.get(pk=uuid)
-    except Mount.DoesNotExist:
-        raise Http404("Station does not exist")
-
-    # POST request, process the form data
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = MountForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            azuracast = AzuracastClient(s.base_url, s.api_key)
-            name = request.POST['name']
-            password = request.POST['password']
-            if password == '':
-                password = None
-            slug = request.POST['slug']
-            mount_path = uuid4()
-
-            az_mount = azuracast.add_mount(s.station_id, {
-                'name': mount_path,
-                'display_name': mount_path,
-                'is_visible_on_public_pages': False,
-                'is_default': False,
-                'is_public': False,
-                'enable_autodj': False
-            })
-
-            m = Mount.objects.create(id=mount_path, name=name, password=password, station=s, mount_point=mount_path, slug=slug, mount_id=az_mount['id']);
-
-            return HttpResponseRedirect('/mounts/%s' % m.id)
-
-    # get request render form
-    else:
-        form = MountForm()
-
-    return render(request, 'add_mount.html', {'form': form, 'station': s})
-
-
-def edit_mount(request, uuid):
-    try:
-        m = Mount.objects.get(pk=uuid)
-    except Mount.DoesNotExist:
-        raise Http404("Mount does not exist")
-
-    # POST request, process the form data
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = MountForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            m.name = request.POST['name']
-            password = request.POST['password']
-            if password == '':
-                password = None
-            m.password = password
-            m.slug = request.POST['slug']
-            m.save()
-
-            return HttpResponseRedirect('/mounts/%s' % m.id)
-
-    # get request render form
-    else:
-        form = MountForm({"name": m.name, 'slug': m.slug, 'password': m.password})
-
-    return render(request, 'edit_mount.html', {'form': form, 'mount': m})
