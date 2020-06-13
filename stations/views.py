@@ -1,6 +1,7 @@
 import os
 from urllib.parse import urlparse
 
+from django.contrib.sites.shortcuts import get_current_site
 from django.http import Http404, HttpResponse
 from django.shortcuts import render
 from furl import furl
@@ -10,7 +11,7 @@ from stations.models import Mount
 
 def mount(request, uuid):
     try:
-        m = Mount.objects.get(pk=uuid)
+        m = Mount.objects.get(pk=uuid, station__site=get_current_site(request))
     except Mount.DoesNotExist:
         raise Http404("Mount does not exist")
 
@@ -27,7 +28,7 @@ def mount(request, uuid):
 
 def download_config(request, uuid):
     try:
-        m = Mount.objects.get(pk=uuid)
+        m = Mount.objects.get(pk=uuid, station__site=get_current_site(request))
     except Mount.DoesNotExist:
         raise Http404("Mount does not exist")
 

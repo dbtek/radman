@@ -4,7 +4,6 @@ from django.db import models, migrations
 def apply_migration(apps, schema_editor):
     Group = apps.get_model('auth', 'Group')
     Group.objects.bulk_create([
-        Group(name=u'superadmin'),
         Group(name=u'siteadmin'),
     ])
 

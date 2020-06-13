@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+from django.contrib.sites.shortcuts import get_current_site
 from django.http import Http404
 from django.shortcuts import render
 from django.utils.timezone import now
@@ -33,7 +34,7 @@ def create_log(request, player, name, organization):
 
 def player_slim(request, slug):
     try:
-        p = Player.objects.get(slug=slug, active=True)
+        p = Player.objects.get(slug=slug, active=True, mount__station__site=get_current_site(request))
     except Player.DoesNotExist:
         raise Http404("Kanal bulunamadı")
 

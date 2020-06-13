@@ -1,13 +1,11 @@
 import uuid
 from uuid import uuid4
-
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.utils.translation import gettext as _
-
 from azuracast import AzuracastClient
 from stations.password import hash_password
 
@@ -21,6 +19,7 @@ class Station(models.Model):
     api_key = models.CharField(max_length=500)
     source_password = models.CharField(max_length=16)
     admin_password = models.CharField(max_length=16)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
