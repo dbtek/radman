@@ -3,8 +3,10 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
-
+from radman.forms import RadmanAdminLoginForm
 from radman.models import SiteUser
+
+admin.site.login_form = RadmanAdminLoginForm
 
 
 class SiteUserInline(admin.StackedInline):
