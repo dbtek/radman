@@ -2,6 +2,7 @@ import os
 from urllib.parse import urlparse, urlunparse
 from uuid import uuid4
 
+from django.contrib.sites.shortcuts import get_current_site
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from furl import furl
