@@ -32,7 +32,7 @@ class Mount(models.Model):
     mount_point = models.UUIDField(null=True, blank=True, unique=True)
 
     def __str__(self):
-        return self.name
+        return '%s - %s' % (self.name, self.station.name)
 
 
 @receiver(pre_save, sender=Mount)

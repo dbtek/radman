@@ -12,9 +12,10 @@ from webplayer.models import ListenerLog
 
 @admin.register(ListenerLog)
 class ListenerLogAdmin(admin.ModelAdmin):
-    list_display = ('name', 'organization', 'ip', 'updated')
+    list_display = ('name', 'organization', 'player', 'created')
     search_fields = ('name', 'organization')
     ordering = ('-updated',)
+    list_filter = ('player', 'created')
     actions = [export_xls]
 
     def changelist_view(self, request, extra_context=None):
