@@ -33,7 +33,7 @@ def create_log(request, player, name, organization):
 
 def player_slim(request, slug):
     try:
-        p = Player.objects.get(slug=slug)
+        p = Player.objects.get(slug=slug, active=True)
     except Player.DoesNotExist:
         raise Http404("Kanal bulunamadı")
 
