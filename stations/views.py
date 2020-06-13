@@ -1,24 +1,11 @@
 import os
-from urllib.parse import urlparse, urlunparse
-from uuid import uuid4
+from urllib.parse import urlparse
 
-from django.contrib.sites.shortcuts import get_current_site
-from django.http import Http404, HttpResponseRedirect, HttpResponse
+from django.http import Http404, HttpResponse
 from django.shortcuts import render
 from furl import furl
 
-from azuracast import AzuracastClient
-from stations.models import Mount, Station
-
-
-def station(request, uuid):
-    try:
-        s = Station.objects.get(pk=uuid)
-        ms = Mount.objects.all().filter(station=s)
-    except Mount.DoesNotExist:
-        raise Http404("Station does not exist")
-
-    return render(request, 'station.html', {'station': s, 'mounts': ms})
+from stations.models import Mount
 
 
 def mount(request, uuid):
