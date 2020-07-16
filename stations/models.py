@@ -7,7 +7,6 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.utils.translation import gettext as _
 from azuracast import AzuracastClient
-from stations.password import hash_password
 
 
 class Station(models.Model):
@@ -69,8 +68,3 @@ class Player(models.Model):
     def __str__(self):
         return self.name
 
-
-@receiver(pre_save, sender=Player)
-def player_pre_save(sender, instance, *args, **kwargs):
-    if instance.password:
-        instance.password = hash_password(instance.password)

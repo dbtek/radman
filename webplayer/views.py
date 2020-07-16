@@ -6,7 +6,6 @@ from django.shortcuts import render
 from django.utils.timezone import now
 
 from stations.models import Mount, Player
-from stations.password import verify_password, hash_password
 from webplayer.forms import PlayerForm
 from webplayer.models import ListenerLog
 
@@ -50,7 +49,7 @@ def player_slim(request, slug):
             name = request.POST['name']
             organization = request.POST['organization']
             # do password check
-            if not verify_password(p.password, password):
+            if not p.password == password:
                 form = PlayerForm(request.POST)
                 form.add_error('password', 'Şifre doğru değil.')
                 return render(request, 'player_form.html', {'action': '/p/%s/' % p.slug, 'form': form})
@@ -70,7 +69,7 @@ def player_slim(request, slug):
                 create_log(request, p, name, organization)
 
                 # do password check
-                if verify_password(p.password, password):
+                if p.password == password:
                     return render_player(request, p)
 
             form = PlayerForm(None)
