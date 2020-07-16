@@ -1,4 +1,6 @@
+import string
 import uuid
+import random
 from uuid import uuid4
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
@@ -54,10 +56,16 @@ def mount_pre_save(sender, instance, *args, **kwargs):
         instance.mount_id = az_mount['id']
 
 
+def random_player_slug():
+    letters = string.ascii_lowercase
+    length = 6
+    return ''.join(random.choice(letters) for i in range(length))
+
+
 class Player(models.Model):
     name = models.CharField(max_length=200)
     mount = models.ForeignKey(Mount, verbose_name=_('Mount'), on_delete=models.PROTECT)
-    slug = models.CharField(null=True, blank=True, unique=True, max_length=6)
+    slug = models.CharField(unique=True, max_length=6, default=random_player_slug)
     password = models.CharField(max_length=500, null=True, blank=True)
     description = models.TextField(max_length=500, null=True, blank=True)
     active = models.BooleanField(verbose_name=_('Active'), default=True)
@@ -67,4 +75,3 @@ class Player(models.Model):
 
     def __str__(self):
         return self.name
-

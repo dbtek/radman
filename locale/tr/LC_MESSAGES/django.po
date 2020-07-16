@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-05 19:07+0300\n"
-"PO-Revision-Date: 2020-06-05 18:26+0300\n"
+"POT-Creation-Date: 2020-07-16 10:53+0300\n"
+"PO-Revision-Date: 2020-07-16 10:54+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: tr\n"
@@ -17,6 +17,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 2.3.1\n"
+
+#: stations/admin.py:44
+msgid "Play"
+msgstr "Dinle"
+
+#: stations/admin.py:51
+msgid "Play URL"
+msgstr "Paylaşma Adresi"
+
+#: stations/models.py:59
+msgid "Mount"
+msgstr "Dinleme Noktası"
+
+#: stations/models.py:63
+msgid "Active"
+msgstr "Aktif"
 
 #: webplayer/exportxls.py:51
 msgid "Export to Excel"
@@ -35,8 +51,8 @@ msgid "Password"
 msgstr "Şifre"
 
 #: webplayer/models.py:10
-msgid "Mount"
-msgstr "Dinleme Noktası"
+msgid "Player"
+msgstr "Player"
 
 #: webplayer/models.py:11
 msgid "ip"

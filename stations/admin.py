@@ -29,7 +29,7 @@ class MountAdmin(admin.ModelAdmin):
 
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'play_url', 'play_widget', 'active')
+    list_display = ('name', 'active', 'play_url', 'play_widget')
 
     def play_widget(self, obj):
         return mark_safe('<audio controls src="%s/%s">%s</audio>' % (
@@ -44,10 +44,11 @@ class PlayerAdmin(admin.ModelAdmin):
     play_widget.short_description = _('Play')
 
     def play_url(self, obj):
-        return '%sp/%s' % (self.base_uri, obj.slug)
+        return mark_safe(
+            '<a href="{base_uri}p/{slug}">{base_uri}p/{slug}</a>'.format(base_uri=self.base_uri, slug=obj.slug)
+        )
 
     play_url.short_description = _('Play URL')
-
 
     def get_queryset(self, request):
         self.base_uri = request.build_absolute_uri('/')
