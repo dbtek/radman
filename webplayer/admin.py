@@ -1,4 +1,6 @@
 import json
+from datetime import datetime, timedelta
+
 from django.contrib import admin
 
 # Register your models here.
@@ -41,10 +43,13 @@ class ListenerLogAdmin(admin.ModelAdmin):
 
     def changelist_view(self, request, extra_context=None):
         # Aggregate new subscribers per day
+        begin_date = datetime.now() - timedelta(days=8)
 
         if request.user.is_superuser:
             chart_data = (
-                ListenerLog.objects.annotate(date=TruncDay("updated"))
+                ListenerLog.objects
+                    .filter(updated__gt=begin_date)
+                    .annotate(date=TruncDay("updated"))
                     .values("date")
                     .annotate(y=Count("id"))
                     .order_by("-date")
