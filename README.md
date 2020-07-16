@@ -20,6 +20,12 @@ $ pip install pipenv
 $ pipenv install
 $ python3 manage.py migrate
 $ python3 manage.py createsuperuser
+```
+
+Then add this to `radman/settings/common`:
+`SITE_ID = 1`
+
+```bash
 $ python3 manage.py runserver
 ```
 

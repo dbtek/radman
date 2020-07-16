@@ -1,17 +1,17 @@
 from django.contrib import admin
-from django.contrib.sites.shortcuts import get_current_site
 
 from .models import Station, Mount, Player
 
 
 @admin.register(Station)
 class StationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'site')
+
     def get_queryset(self, request):
         if request.user.is_superuser:
             return Station.objects.all()
         if request.user.groups.filter(name='siteadmin').exists():
-            site = get_current_site(request)
-            return Station.objects.filter(site=site)
+            return Station.objects.filter(site=request.user.siteuser.site)
 
 
 @admin.register(Mount)
@@ -22,8 +22,7 @@ class MountAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return Mount.objects.all()
         else:
-            site = get_current_site(request)
-            return Mount.objects.filter(station__site=site)
+            return Mount.objects.filter(station__site=request.user.siteuser.site)
 
 
 @admin.register(Player)
@@ -33,5 +32,4 @@ class PlayerAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return Player.objects.all()
         else:
-            site = get_current_site(request)
-            return Player.objects.filter(mount__station__site=site)
+            return Player.objects.filter(mount__station__site=request.user.siteuser.site)
