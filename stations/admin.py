@@ -27,9 +27,24 @@ class MountAdmin(admin.ModelAdmin):
             return Mount.objects.filter(station__site=request.user.siteuser.site)
 
 
+def make_active(modeladmin, request, queryset):
+    queryset.update(active=True)
+
+
+make_active.short_description = _('Mark selected players active')
+
+
+def make_inactive(modeladmin, request, queryset):
+    queryset.update(active=False)
+
+
+make_inactive.short_description = _('Mark selected players inactive')
+
+
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
     list_display = ('name', 'active', 'play_url', 'play_widget')
+    actions = [make_active, make_inactive]
 
     def play_widget(self, obj):
         return mark_safe('<audio controls src="%s/%s">%s</audio>' % (

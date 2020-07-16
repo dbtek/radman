@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-16 12:15+0300\n"
-"PO-Revision-Date: 2020-07-16 12:15+0300\n"
+"POT-Creation-Date: 2020-07-16 12:29+0300\n"
+"PO-Revision-Date: 2020-07-16 12:30+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: tr\n"
@@ -18,11 +18,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 2.3.1\n"
 
-#: stations/admin.py:44
+#: stations/admin.py:34
+msgid "Mark selected players active"
+msgstr "Seçili player nesnelerini aktifleştir"
+
+#: stations/admin.py:41
+msgid "Mark selected players inactive"
+msgstr "Seçili player nesnelerini pasifleştir"
+
+#: stations/admin.py:59
 msgid "Play"
 msgstr "Dinle"
 
-#: stations/admin.py:51
+#: stations/admin.py:66
 msgid "Play URL"
 msgstr "Paylaşma Adresi"
 
