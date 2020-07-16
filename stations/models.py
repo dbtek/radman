@@ -1,3 +1,5 @@
+import locale
+from datetime import datetime
 import string
 import uuid
 import random
@@ -62,11 +64,20 @@ def random_player_slug():
     return ''.join(random.choice(letters) for i in range(length))
 
 
+def random_player_password():
+    return random.randint(1000, 9999)
+
+
+def player_name():
+    locale.setlocale(locale.LC_TIME, "tr_TR")
+    return datetime.now().strftime("%d %B")
+
+
 class Player(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, default=player_name)
     mount = models.ForeignKey(Mount, verbose_name=_('Mount'), on_delete=models.PROTECT)
     slug = models.CharField(unique=True, max_length=6, default=random_player_slug)
-    password = models.CharField(max_length=500, null=True, blank=True)
+    password = models.CharField(max_length=500, null=True, blank=True, default=random_player_password)
     description = models.TextField(max_length=500, null=True, blank=True)
     active = models.BooleanField(verbose_name=_('Active'), default=True)
 
