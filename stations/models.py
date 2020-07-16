@@ -74,11 +74,11 @@ def player_name():
 
 
 class Player(models.Model):
-    name = models.CharField(max_length=200, default=player_name)
+    name = models.CharField(verbose_name=_('Name'), max_length=200, default=player_name)
     mount = models.ForeignKey(Mount, verbose_name=_('Mount'), on_delete=models.PROTECT)
-    slug = models.CharField(unique=True, max_length=6, default=random_player_slug)
-    password = models.CharField(max_length=500, null=True, blank=True, default=random_player_password)
-    description = models.TextField(max_length=500, null=True, blank=True)
+    slug = models.CharField(verbose_name=_('Slug'), unique=True, max_length=6, default=random_player_slug)
+    password = models.CharField(verbose_name=_('Password'), max_length=500, null=True, blank=True, default=random_player_password)
+    description = models.TextField(verbose_name=_('Description'), max_length=500, null=True, blank=True)
     active = models.BooleanField(verbose_name=_('Active'), default=True)
 
     def get_stream_url(self):

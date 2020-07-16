@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-16 10:53+0300\n"
-"PO-Revision-Date: 2020-07-16 10:54+0300\n"
+"POT-Creation-Date: 2020-07-16 12:15+0300\n"
+"PO-Revision-Date: 2020-07-16 12:15+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: tr\n"
@@ -26,11 +26,27 @@ msgstr "Dinle"
 msgid "Play URL"
 msgstr "Paylaşma Adresi"
 
-#: stations/models.py:59
+#: stations/models.py:77 webplayer/forms.py:7
+msgid "Name"
+msgstr "İsim"
+
+#: stations/models.py:78
 msgid "Mount"
 msgstr "Dinleme Noktası"
 
-#: stations/models.py:63
+#: stations/models.py:79
+msgid "Slug"
+msgstr "Slug"
+
+#: stations/models.py:80 webplayer/forms.py:9
+msgid "Password"
+msgstr "Şifre"
+
+#: stations/models.py:81
+msgid "Description"
+msgstr "Açıklama"
+
+#: stations/models.py:82
 msgid "Active"
 msgstr "Aktif"
 
@@ -38,17 +54,9 @@ msgstr "Aktif"
 msgid "Export to Excel"
 msgstr "Excel formatında dışa aktar"
 
-#: webplayer/forms.py:7
-msgid "Name"
-msgstr "İsim"
-
 #: webplayer/forms.py:8 webplayer/models.py:13
 msgid "Organization"
 msgstr "Grup"
-
-#: webplayer/forms.py:9
-msgid "Password"
-msgstr "Şifre"
 
 #: webplayer/models.py:10
 msgid "Player"
