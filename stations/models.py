@@ -82,7 +82,7 @@ class Player(models.Model):
     active = models.BooleanField(verbose_name=_('Active'), default=True)
 
     def get_stream_url(self):
-        return '%s:%s/%s' % (self.mount.station.base_url, self.mount.station.port, self.mount.mount_point)
+        return '%s/%s/%s' % (self.mount.station.base_url, self.mount.station.port, self.mount.mount_point)
 
     def __str__(self):
         return self.name
