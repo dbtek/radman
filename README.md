@@ -1,16 +1,19 @@
 ## radman
 
-Basic django app to manage stations & mounts of Azuracast for private streams. Supports only IceCast.
+Basic django app to manage icecast stations for private streams.
 
 ### Features
-- Mount adding through Azuracast API.
 - UUID based naming.
 - Custom player page.
 - Optional stream password protection.
 - Configuration file generation for Butt.
 
+### Streaming Tools
+- [butt](https://sourceforge.net/projects/butt/) (broadcast using this tool)
+- [Android Icecast Broadcast App](https://github.com/faruktoptas/android-icecast-broadcast)
+
 ### To Do
-- Stations add / remove through API.
+- Manage Icecast configuration through Django Admin.
 
 ### Development
 ```bash
@@ -31,6 +34,13 @@ $ python3 manage.py runserver
 
 ### Endpoints
 - /admin                    - Django admin.
-- /stations/:uuid           - Station details & mount management on a station.
-- /stations/:uuid/add-mount - Add mount.
-- /mounts/:uuid             - Mount detais
+- /mounts/:uuid             - Mount details (butt / Android broadcast config).
+
+
+### Run in Production
+See docker-compose.yml. Update domains, secrets / passwords in docker-compose.yml and icecast/icecast.xml.
+
+Then run:
+ ````bash
+$ docker-compose up -d
+```
