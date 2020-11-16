@@ -18,12 +18,18 @@ class StationAdmin(admin.ModelAdmin):
 
 @admin.register(Mount)
 class MountAdmin(admin.ModelAdmin):
+    list_display = ('name', 'stream_config')
 
     def get_queryset(self, request):
         if request.user.is_superuser:
             return Mount.objects.all()
         else:
             return Mount.objects.filter(station__site=request.user.siteuser.site)
+
+    def stream_config(self, obj):
+        return mark_safe('<a href="/mounts/%s">%s</a>' % (obj.id, _('Stream Config')))
+
+    stream_config.short_description = _('Stream Config')
 
 
 def make_active(modeladmin, request, queryset):
