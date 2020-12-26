@@ -41,6 +41,6 @@ $ python3 manage.py runserver
 See docker-compose.yml. Update domains, secrets / passwords in docker-compose.yml and icecast/icecast.xml.
 
 Then run:
- ````bash
+```bash
 $ docker-compose up -d
 ```
