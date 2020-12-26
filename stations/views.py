@@ -21,7 +21,7 @@ def mount(request, uuid):
     surl.username = 'source'
     surl.password = m.station.source_password
     surl.port = m.station.port
-    surl.path = m.id.__str__()
+    surl.path = m.mount_point.__str__()
 
     return render(request, 'mount.html', {'mount': m, 'host': hurl.netloc, 'coolmic_url': surl})
 
