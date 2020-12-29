@@ -66,3 +66,23 @@ class Player(models.Model):
     class Meta:
         ordering = ['-id', ]
 
+
+class VideoPlayer(models.Model):
+    name = models.CharField(verbose_name=_('Name'), max_length=200, default=player_name)
+    stream_url = models.CharField(verbose_name=_('Stream URL'), max_length=500)
+    slug = models.CharField(verbose_name=_('Slug'), unique=True, max_length=6, default=random_player_slug)
+    password = models.CharField(verbose_name=_('Password'), max_length=500, null=True, blank=True,
+                                default=random_player_password, help_text=_('Leave empty for open access'))
+    description = models.TextField(verbose_name=_('Description'), max_length=500, null=True, blank=True)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
+    active = models.BooleanField(verbose_name=_('Active'), default=True)
+
+    def get_stream_url(self):
+        return self.stream_url
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['-id', ]
+

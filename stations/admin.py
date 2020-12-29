@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
-from .models import Station, Mount, Player
+from .models import Station, Mount, Player, VideoPlayer
 
 
 @admin.register(Station)
@@ -57,14 +57,14 @@ class PlayerAdmin(admin.ModelAdmin):
         return mark_safe(
             '<div>'
             '<audio type="audio/mpeg" id="audio-' + id + '">'
-            '<source src="' + url + '" type="audio/mpeg" />'
-            '</audio>'
-            '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"'
-                                                     'onclick="document.querySelector(\'#audio-' + id + '\').play()">'
-            '<path d="M0 0h24v24H0z" fill="none"/>'
-            '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>'
-            '</svg>'
-            '</div>'
+                                                         '<source src="' + url + '" type="audio/mpeg" />'
+                                                                                 '</audio>'
+                                                                                 '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"'
+                                                                                 'onclick="document.querySelector(\'#audio-' + id + '\').play()">'
+                                                                                                                                    '<path d="M0 0h24v24H0z" fill="none"/>'
+                                                                                                                                    '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>'
+                                                                                                                                    '</svg>'
+                                                                                                                                    '</div>'
         )
 
     play_widget.short_description = _('Play')
@@ -82,3 +82,23 @@ class PlayerAdmin(admin.ModelAdmin):
             return Player.objects.all()
         else:
             return Player.objects.filter(mount__station__site=request.user.siteuser.site)
+
+
+@admin.register(VideoPlayer)
+class VideoPlayerAdmin(admin.ModelAdmin):
+    list_display = ('name', 'active', 'play_url')
+    actions = [make_active, make_inactive]
+
+    def play_url(self, obj):
+        return mark_safe(
+            '<a href="{base_uri}p/{slug}">{base_uri}p/{slug}</a>'.format(base_uri=self.base_uri, slug=obj.slug)
+        )
+
+    play_url.short_description = _('Play URL')
+
+    def get_queryset(self, request):
+        self.base_uri = request.build_absolute_uri('/')
+        if request.user.is_superuser:
+            return VideoPlayer.objects.all()
+        else:
+            return VideoPlayer.objects.filter(mount__station__site=request.user.siteuser.site)
