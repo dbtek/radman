@@ -5,7 +5,7 @@ from django.contrib import admin
 
 # Register your models here.
 from django.core.serializers.json import DjangoJSONEncoder
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.db.models.functions import TruncDay
 from django.utils.translation import ugettext as _
 
@@ -17,29 +17,43 @@ class PlayerListFilter(admin.RelatedOnlyFieldListFilter):
     def field_choices(self, field, request, model_admin):
         if request.user.is_superuser:
             return super().field_choices(field, request, model_admin)
-        return field.get_choices(include_blank=False, limit_choices_to={'mount__station__site': request.user.siteuser.site})
+        return field.get_choices(include_blank=False,
+                                 limit_choices_to={
+                                     'mount__station__site': request.user.siteuser.site,
+                                 })
+
+
+class VideoPlayerListFilter(admin.RelatedOnlyFieldListFilter):
+    def field_choices(self, field, request, model_admin):
+        if request.user.is_superuser:
+            return super().field_choices(field, request, model_admin)
+        return field.get_choices(include_blank=False,
+                                 limit_choices_to={
+                                     'station__site': request.user.siteuser.site
+                                 })
 
 
 @admin.register(ListenerLog)
 class ListenerLogAdmin(admin.ModelAdmin):
-    list_display = ('name', 'organization', 'player', 'station', 'created')
+    list_display = ('name', 'organization', 'player', 'video_player', 'station', 'created')
     search_fields = ('name', 'organization')
     ordering = ('-updated',)
     actions = [export_xls]
 
     def station(self, obj):
-        return obj.player.mount.station
+        return obj.player.mount.station if obj.player else ''
 
     def get_list_filter(self, request):
         if request.user.is_superuser:
-            return [('player', PlayerListFilter), 'created', 'player__mount__station__site']
-        return [('player', PlayerListFilter), 'created']
+            return [('player', PlayerListFilter), ('video_player', VideoPlayerListFilter), 'created',
+                    'player__mount__station__site']
+        return [('player', PlayerListFilter), ('video_player', VideoPlayerListFilter), 'created']
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        if request.user.is_superuser:
+        if False and request.user.is_superuser:
             return qs
-        return qs.filter(player__mount__station__site=request.user.siteuser.site)
+        return qs.filter(Q(player__mount__station__site=request.user.siteuser.site) | Q(video_player__site=request.user.siteuser.site))
 
     def changelist_view(self, request, extra_context=None):
         # Aggregate new subscribers per day

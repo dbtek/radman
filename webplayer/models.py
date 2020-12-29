@@ -8,7 +8,7 @@ from stations.models import Player, VideoPlayer
 
 class ListenerLog(models.Model):
     player = models.ForeignKey(Player, models.CASCADE, verbose_name=_('Player'), null=True, blank=True, )
-    video_player = models.ForeignKey(VideoPlayer, models.CASCADE, verbose_name=_('Player'), null=True, blank=True, )
+    video_player = models.ForeignKey(VideoPlayer, models.CASCADE, verbose_name=_('Video Player'), null=True, blank=True, )
     ip = models.CharField(_('ip'), max_length=100)
     browser = models.TextField(_('Web Browser'), blank=True, null=True)
     organization = models.TextField(_('Organization'), blank=True, null=True)
