@@ -23,6 +23,12 @@
                 display: block !important;
             }
         }
+
+        .description {
+            margin: 1.5rem 0 1.5rem 0;
+            text-align: center;
+            font-size: 1.2rem;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dash-shaka-playback@latest/dist/dash-shaka-playback.min.js"></script>
@@ -37,6 +43,9 @@
         <span>Sayfayı yenile</span>
     </button>
     <script>
+        function refreshPage() {
+            window.location.reload();
+        }
         window.addEventListener('DOMContentLoaded', function () {
             function getLevelLabel(level) {
                 return level.level.height + 'p';
