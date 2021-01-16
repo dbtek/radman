@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.contrib.sites.models import Site
-from django.forms import ModelForm
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
