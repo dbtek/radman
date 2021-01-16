@@ -22,7 +22,7 @@ class PlayerListFilter(admin.RelatedOnlyFieldListFilter):
         return field.get_choices(include_blank=False,
                                  limit_choices_to={
                                      'mount__station__site': request.user.siteuser.site,
-                                 })
+                                 })[:10]
 
 
 class VideoPlayerListFilter(admin.RelatedOnlyFieldListFilter):
@@ -32,7 +32,7 @@ class VideoPlayerListFilter(admin.RelatedOnlyFieldListFilter):
         return field.get_choices(include_blank=False,
                                  limit_choices_to={
                                      'site': request.user.siteuser.site
-                                 })
+                                 })[:10]
 
 
 class SiteListFilter(admin.SimpleListFilter, ABC):
