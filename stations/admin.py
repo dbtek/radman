@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.contrib.sites.models import Site
+from django.forms import ModelForm
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
@@ -51,6 +53,11 @@ class PlayerAdmin(admin.ModelAdmin):
     list_display = ('name', 'active', 'play_url', 'play_widget')
     actions = [make_active, make_inactive]
 
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(PlayerAdmin, self).get_form(request, obj=None, **kwargs)
+        form.base_fields['mount'].queryset = Mount.objects.filter(station__site=request.user.siteuser.site)
+        return form
+
     def play_widget(self, obj):
         id = str(obj.id);
         url = obj.get_stream_url()
@@ -86,8 +93,13 @@ class PlayerAdmin(admin.ModelAdmin):
 
 @admin.register(VideoPlayer)
 class VideoPlayerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'active', 'play_url')
+    list_display = ('name', 'site', 'active', 'play_url')
     actions = [make_active, make_inactive]
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(VideoPlayerAdmin, self).get_form(request, obj=None, **kwargs)
+        form.base_fields['site'].queryset = Site.objects.filter(id=request.user.siteuser.site.id)
+        return form
 
     def play_url(self, obj):
         return mark_safe(
