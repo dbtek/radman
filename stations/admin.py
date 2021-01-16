@@ -101,4 +101,4 @@ class VideoPlayerAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return VideoPlayer.objects.all()
         else:
-            return VideoPlayer.objects.filter(station__site=request.user.siteuser.site)
+            return VideoPlayer.objects.filter(site=request.user.siteuser.site)
