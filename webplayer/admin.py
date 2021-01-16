@@ -68,8 +68,7 @@ class ListenerLogAdmin(admin.ModelAdmin):
 
     def get_list_filter(self, request):
         if request.user.is_superuser:
-            return [('player', PlayerListFilter), ('video_player', VideoPlayerListFilter), 'created',
-                    SiteListFilter]
+            return [SiteListFilter, ('player', PlayerListFilter), ('video_player', VideoPlayerListFilter), 'created',]
         return [('player', PlayerListFilter), ('video_player', VideoPlayerListFilter), 'created']
 
     def get_queryset(self, request):
