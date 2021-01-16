@@ -1,9 +1,11 @@
 import json
+from abc import ABC
 from datetime import datetime, timedelta
 
 from django.contrib import admin
 
 # Register your models here.
+from django.contrib.sites.models import Site
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Count, Q
 from django.db.models.functions import TruncDay
@@ -29,53 +31,66 @@ class VideoPlayerListFilter(admin.RelatedOnlyFieldListFilter):
             return super().field_choices(field, request, model_admin)
         return field.get_choices(include_blank=False,
                                  limit_choices_to={
-                                     'station__site': request.user.siteuser.site
+                                     'site': request.user.siteuser.site
                                  })
+
+
+class SiteListFilter(admin.SimpleListFilter, ABC):
+    title = _('Site')
+    parameter_name = 'site'
+
+    def queryset(self, request, queryset):
+        return queryset.filter(Q(player__mount__station__site__id=self.value()) | Q(
+            video_player__site__id=self.value()))
+
+    def lookups(self, request, model_admin):
+        if request.user.is_superuser:
+            sites = Site.objects.all()
+        else:
+            sites = (request.user.siteuser.site,)
+        return map(lambda x: (x.id, x.name), sites)
 
 
 @admin.register(ListenerLog)
 class ListenerLogAdmin(admin.ModelAdmin):
-    list_display = ('name', 'organization', 'player', 'video_player', 'station', 'created')
+    list_display = ('name', 'organization', 'player', 'video_player', 'get_site', 'created')
     search_fields = ('name', 'organization')
-    ordering = ('-updated',)
+    ordering = ('-id',)
     actions = [export_xls]
 
-    def station(self, obj):
-        return obj.player.mount.station if obj.player else ''
+    def get_site(self, obj):
+        if obj.player is not None:
+            return obj.player.mount.station.site
+        if obj.video_player is not None:
+            return obj.video_player.site
+
+    get_site.short_description = _('Site')
 
     def get_list_filter(self, request):
         if request.user.is_superuser:
             return [('player', PlayerListFilter), ('video_player', VideoPlayerListFilter), 'created',
-                    'player__mount__station__site']
+                    SiteListFilter]
         return [('player', PlayerListFilter), ('video_player', VideoPlayerListFilter), 'created']
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        if False and request.user.is_superuser:
+        if request.user.is_superuser:
             return qs
-        return qs.filter(Q(player__mount__station__site=request.user.siteuser.site) | Q(video_player__site=request.user.siteuser.site))
+        return qs.filter(Q(player__mount__station__site=request.user.siteuser.site) | Q(
+            video_player__site=request.user.siteuser.site))
 
     def changelist_view(self, request, extra_context=None):
         # Aggregate new subscribers per day
         begin_date = datetime.now() - timedelta(days=8)
 
-        if request.user.is_superuser:
-            chart_data = (
-                ListenerLog.objects
-                    .filter(updated__gt=begin_date)
-                    .annotate(date=TruncDay("updated"))
-                    .values("date")
-                    .annotate(y=Count("id"))
-                    .order_by("-date")
-            )
-        else:
-            chart_data = (
-                ListenerLog.objects.filter(player__mount__station__site=request.user.siteuser.site).annotate(
-                    date=TruncDay("updated"))
-                    .values("date")
-                    .annotate(y=Count("id"))
-                    .order_by("-date")
-            )
+        chart_data = (
+            self.get_queryset(request)
+                .filter(updated__gt=begin_date)
+                .annotate(date=TruncDay("updated"))
+                .values("date")
+                .annotate(y=Count("id"))
+                .order_by("-date")
+        )
 
         # Serialize and attach the chart data to the template context
         as_json = json.dumps(list(chart_data), cls=DjangoJSONEncoder)
