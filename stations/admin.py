@@ -52,6 +52,24 @@ class PlayerAdmin(admin.ModelAdmin):
     list_display = ('name', 'active', 'play_url', 'play_widget')
     actions = [make_active, make_inactive]
 
+    def changelist_view(self, request, extra_context=None):
+        # set default filter
+        if 'active__exact' not in request.GET:
+            q = request.GET.copy()
+            q['active__exact'] = '1'
+            request.GET = q
+            request.META['QUERY_STRING'] = request.GET.urlencode()
+        return super(PlayerAdmin, self).changelist_view(request, extra_context=extra_context)
+
+    def lookup_allowed(self, lookup, value):
+        if lookup in ('mount__station__site__id__exact', 'active__exact'):
+            return True
+
+    def get_list_filter(self, request):
+        if request.user.is_superuser:
+            return ('active', 'mount__station__site',)
+        return ('active',)
+
     def get_form(self, request, obj=None, **kwargs):
         form = super(PlayerAdmin, self).get_form(request, obj=None, **kwargs)
         form.base_fields['mount'].queryset = Mount.objects.filter(station__site=request.user.siteuser.site)
