@@ -6,6 +6,7 @@ from datetime import datetime
 
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext as _
 
@@ -57,6 +58,10 @@ class Player(models.Model):
     description = models.TextField(verbose_name=_('Description'), max_length=500, null=True, blank=True)
     active = models.BooleanField(verbose_name=_('Active'), default=True)
 
+    def clean_fields(self, exclude=('mount', 'slug', 'password', 'description', 'active')):
+        if self.name == player_name():
+            raise ValidationError({'name': _('Please add a descriptive name')}, code='default_name_not_changed',)
+
     def get_stream_url(self):
         return '%s/%s/%s' % (self.mount.station.base_url, self.mount.station.port, self.mount.mount_point)
 
@@ -76,6 +81,10 @@ class VideoPlayer(models.Model):
     description = models.TextField(verbose_name=_('Description'), max_length=500, null=True, blank=True)
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
     active = models.BooleanField(verbose_name=_('Active'), default=True)
+
+    def clean_fields(self, exclude=('stream_url', 'slug', 'password', 'description', 'site', 'active')):
+        if self.name == player_name():
+            raise ValidationError({'name': _('Please add a descriptive name')}, code='default_name_not_changed', )
 
     def get_stream_url(self):
         return self.stream_url
