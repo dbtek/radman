@@ -70,6 +70,8 @@ class Player(models.Model):
 
     class Meta:
         ordering = ['-id', ]
+        verbose_name = _('Player')
+        verbose_name_plural = _('Players')
 
 
 class VideoPlayer(models.Model):
@@ -94,4 +96,6 @@ class VideoPlayer(models.Model):
 
     class Meta:
         ordering = ['-id', ]
+        verbose_name = _('Video Player')
+        verbose_name_plural = _('Video Players')
 

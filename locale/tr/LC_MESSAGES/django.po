@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-16 22:00+0300\n"
+"POT-Creation-Date: 2021-01-16 22:29+0300\n"
 "PO-Revision-Date: 2020-07-16 12:30+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -18,27 +18,27 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 2.3.1\n"
 
-#: stations/admin.py:30 stations/admin.py:32
+#: stations/admin.py:31 stations/admin.py:33
 msgid "Stream Config"
 msgstr "Yayın Ayarları"
 
-#: stations/admin.py:39
+#: stations/admin.py:40
 msgid "Mark selected players active"
 msgstr "Seçili player nesnelerini aktifleştir"
 
-#: stations/admin.py:46
+#: stations/admin.py:47
 msgid "Mark selected players inactive"
 msgstr "Seçili player nesnelerini pasifleştir"
 
-#: stations/admin.py:70
+#: stations/admin.py:76
 msgid "Play"
 msgstr "Dinle"
 
-#: stations/admin.py:77 stations/admin.py:97
+#: stations/admin.py:83 stations/admin.py:108
 msgid "Play URL"
 msgstr "Paylaşma Adresi"
 
-#: stations/models.py:53 stations/models.py:76 webplayer/forms.py:7
+#: stations/models.py:53 stations/models.py:78 webplayer/forms.py:7
 msgid "Name"
 msgstr "İsim"
 
@@ -46,33 +46,49 @@ msgstr "İsim"
 msgid "Mount"
 msgstr "Dinleme Noktası"
 
-#: stations/models.py:55 stations/models.py:78
+#: stations/models.py:55 stations/models.py:80
 msgid "Slug"
 msgstr "Slug"
 
-#: stations/models.py:56 stations/models.py:79 webplayer/forms.py:9
+#: stations/models.py:56 stations/models.py:81 webplayer/forms.py:9
 msgid "Password"
 msgstr "Şifre"
 
-#: stations/models.py:57 stations/models.py:80
+#: stations/models.py:57 stations/models.py:82
 msgid "Leave empty for open access"
 msgstr "Şifresiz erişim için boş bırakınız"
 
-#: stations/models.py:58 stations/models.py:81
+#: stations/models.py:58 stations/models.py:83
 msgid "Description"
 msgstr "Açıklama"
 
-#: stations/models.py:59 stations/models.py:83
+#: stations/models.py:59 stations/models.py:85
 msgid "Active"
 msgstr "Aktif"
 
-#: stations/models.py:63 stations/models.py:86
+#: stations/models.py:63 stations/models.py:89
 msgid "Please add a descriptive name"
 msgstr "Lütfen açıklayıcı bir isim giriniz"
 
-#: stations/models.py:77
+#: stations/models.py:73 webplayer/models.py:10
+msgid "Player"
+msgstr "Link"
+
+#: stations/models.py:74
+msgid "Players"
+msgstr "Linkler"
+
+#: stations/models.py:79
 msgid "Stream URL"
 msgstr "Akış URL'i"
+
+#: stations/models.py:99 webplayer/models.py:11
+msgid "Video Player"
+msgstr "Video Linki"
+
+#: stations/models.py:100
+msgid "Video Players"
+msgstr "Video Linkleri"
 
 #: webplayer/admin.py:39 webplayer/admin.py:67
 msgid "Site"
@@ -85,16 +101,6 @@ msgstr "Excel formatında dışa aktar"
 #: webplayer/forms.py:8 webplayer/models.py:14
 msgid "Organization"
 msgstr "Grup"
-
-#: webplayer/models.py:10
-msgid "Player"
-msgstr "Player"
-
-#: webplayer/models.py:11
-#, fuzzy
-#| msgid "Player"
-msgid "Video Player"
-msgstr "Player"
 
 #: webplayer/models.py:12
 msgid "ip"
