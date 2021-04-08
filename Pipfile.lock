@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "6d4f50bd234d2b98660470804e45aff9af590c1f8a1a21b98d8129fbe907e510"
+            "sha256": "8a14af311edbbbbbd78ac0fae112d9bd54ed6e99cf973bb987c94e9f0282595a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -42,11 +42,11 @@
         },
         "django": {
             "hashes": [
-                "sha256:5052b34b34b3425233c682e0e11d658fd6efd587d11335a0203d827224ada8f2",
-                "sha256:e1630333248c9b3d4e38f02093a26f1e07b271ca896d73097457996e0fae12e8"
+                "sha256:9bc7aa619ed878fedba62ce139abe663a147dccfd20e907725ec11e02a1ca225",
+                "sha256:d58d8394036db75a81896037d757357e79406e8f68816c3e8a28721c1d9d4c11"
             ],
             "index": "pypi",
-            "version": "==3.0.7"
+            "version": "==3.0.14"
         },
         "django-qr-code": {
             "hashes": [
@@ -82,9 +82,9 @@
         },
         "maxminddb": {
             "hashes": [
-                "sha256:f4d28823d9ca23323d113dc7af8db2087aa4f657fafc64ff8f7a8afda871425b"
+                "sha256:47e86a084dd814fac88c99ea34ba3278a74bc9de5a25f4b815b608798747c7dc"
             ],
-            "version": "==1.5.4"
+            "version": "==2.0.3"
         },
         "orderedmultidict": {
             "hashes": [
