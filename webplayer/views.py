@@ -101,7 +101,7 @@ def render_player(request, p, is_video):
     if is_video:
         return render(request, 'videoplayer.html', {
             'playerName': p.name,
-            'playerDescription': p.description or '',
+            'playerDescription': (p.description or '').replace('\n', '<br/>'),
             'streamUrl': p.get_stream_url()
         })
     else:
@@ -109,6 +109,6 @@ def render_player(request, p, is_video):
             'stationName': p.mount.station.name,
             'playerName': p.name,
             'mountName': p.mount.name,
-            'playerDescription': p.description or '',
+            'playerDescription': (p.description or '').replace('\n', '<br/>'),
             'streamUrl': p.get_stream_url()
         })
