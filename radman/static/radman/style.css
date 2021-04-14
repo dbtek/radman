@@ -43,6 +43,14 @@ button:hover, .button:hover {
   justify-content: center;
   align-items: center;
 }
+.icon-button.is-large {
+  width: 100px;
+  height: 100px;
+}
+.icon-button.is-large svg {
+  width: 75px;
+  height: 75px;
+}
 .button.primary {
   fill: #fff;
 }
