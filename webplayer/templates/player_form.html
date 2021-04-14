@@ -4,13 +4,14 @@
 {% block head %}
     <style>
         main {
-            margin: calc(50vh - 200px) auto 0;
+            margin: calc(50vh - 300px) auto 0;
             min-height: unset;
             position: relative;
         }
         h1 {
             text-align: center;
             font-weight: 400;
+            margin-bottom: 1.5rem;
         }
         h4 {
             text-align: center;
@@ -30,10 +31,10 @@
 {% block body %}
     <main>
         <h1>Hoş geldiniz</h1>
-        <h4>Lütfen bilgilerinizi giriniz.</h4>
         <form action="{{ action }}" method="post">
             {% csrf_token %}
             {{ form.as_p }}
+            <br/>
             <button class="button primary" type="submit" style="width: 100%;">
                 Giriş
             </button>
