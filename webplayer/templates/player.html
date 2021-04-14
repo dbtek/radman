@@ -36,7 +36,7 @@
     <main>
         <h1 style="margin-bottom: 2rem;"><strong class="has-border padding-x1">{{ stationName }}</strong><span class="invert has-border padding-x1">{{ mountName }}</span></h1>
         <audio id="player" autoplay>
-            <source src="https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_1MG.mp3" type="audio/mp3" />
+            <source src="{{ streamUrl }}" type="audio/mp3" />
         </audio>
         <div style="text-align: center">
             <button id="playBtn" class="icon-button is-large">
