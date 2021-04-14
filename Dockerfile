@@ -1,4 +1,4 @@
-ARG IMAGE_TAG="python3.8-alpine3.10"
+ARG IMAGE_TAG="python3.7-alpine3.8"
 
 # Build dependencies in separate container
 FROM tiangolo/uvicorn-gunicorn:${IMAGE_TAG} AS builder
