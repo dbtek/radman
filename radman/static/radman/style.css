@@ -1,0 +1,87 @@
+body {
+  font-family: 'Raleway', sans-serif;
+  padding: 0;
+  margin: 0;
+}
+main {
+  max-width: 300px;
+  margin: 0 auto;
+  min-height: calc(100vh - 72px);
+}
+footer {
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+button, .button {
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  background: #eee;
+  padding: 0.5rem 1rem;
+  font-size: 1.1rem;
+}
+.button.has-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+}
+button.primary, .button.primary {
+  background: #2980b9;
+  color: #fff;
+}
+button:hover, .button:hover {
+  background: #ddd;
+  color: #2980b9;
+}
+.icon-button {
+  width: 32px;
+  border-radius: 50%;
+  height: 32px;
+  padding: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+.button.primary {
+  fill: #fff;
+}
+.icon-button.primary {
+  background: #eee;
+  fill: #2980b9;
+}
+.icon-button.error-button svg{
+  fill: #e74c3c;
+}
+form p {
+  display: flex;
+  align-items: center;
+}
+input {
+  flex: 1;
+  border-radius: 4px;
+  border: 1px solid #999;
+  padding: 0.5rem 0.5rem;
+}
+label {
+  margin-right: 1rem;
+  min-width: 95px;
+}
+a {
+  text-decoration: none;
+  color: #2980b9;
+}
+.alert-content {
+  background: #eee;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  min-height: 30px;
+}
+.alert-content.error {
+  background: #e74c3c;
+  color: #fff;
+}
