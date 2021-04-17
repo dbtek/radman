@@ -10,7 +10,7 @@ RUN apk add --update postgresql-dev gcc python3-dev musl-dev
 
 RUN cd ${WORKDIR} \
     && pip install pipenv \
-    && pipenv install --system
+    && pipenv install --system --deploy
 
 # Create the final container with the app
 FROM tiangolo/uvicorn-gunicorn:${IMAGE_TAG}
