@@ -6,5 +6,5 @@ from django.core.exceptions import ValidationError
 class RadmanAdminLoginForm(AuthenticationForm):
     def confirm_login_allowed(self, user):
         site = get_current_site(self.request)
-        if user.siteuser.site.domain != site.domain:
+        if not user.is_superuser and user.siteuser.site.domain != site.domain:
             raise ValidationError('You are not allowed to login on this site.', code='inactive')
