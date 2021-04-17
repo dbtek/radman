@@ -1,0 +1,66 @@
+version: "3.3"
+services:
+  icecast:
+    image: moul/icecast
+    ports:
+      - "8020:8020"
+    networks:
+      - nginx_network
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./icecast/config.xml:/etc/icecast2/icecast.xml
+    restart: always
+
+  raddb:
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_DB=radman
+      - POSTGRES_USER=radman
+      - POSTGRES_PASSWORD=passwd
+    networks:
+      - db_network
+      
+
+  radweb:
+    build: ../
+    environment:
+      - PORT=8000
+      - ALLOWED_HOSTS=127.0.0.1,localhost,example.com,0.0.0.0.xip.io
+      - DATABASE_HOST=raddb
+      - DATABASE_PORT=5432
+      - DATABASE_USER=radman
+      - DATABASE_PASSWORD=passwd
+      - DATABASE_NAME=radman
+      - DJANGO_SETTINGS_MODULE=radman.settings.prod
+      - DEBUG=1
+      - SITE_ID=1
+    depends_on:
+      - raddb
+    networks:
+      - nginx_network
+      - db_network
+    ports:
+      - "80:8000" # disable for prod
+
+  # for production use
+  # nginx:
+  #   restart: unless-stopped
+  #   image: jonasal/nginx-certbot
+  #   volumes:
+  #     - ./nginx/conf.d:/etc/nginx/conf.d:ro
+  #     - ./nginx/logs:/etc/nginx/logs
+  #     - letsencrypt:/etc/letsencrypt
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   environment:
+  #     - CERTBOT_EMAIL=some1@example.com
+  #   networks:
+  #     - nginx_network
+
+networks:
+  nginx_network:
+  db_network:
+
+volumes:
+    letsencrypt:
