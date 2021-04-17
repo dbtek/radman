@@ -4,12 +4,12 @@ services:
     image: moul/icecast
     ports:
       - "8020:8020"
-    networks:
-      - nginx_network
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./icecast/config.xml:/etc/icecast2/icecast.xml
     restart: always
+    networks:
+      - nginx_network
 
   raddb:
     image: postgres:13-alpine
@@ -19,7 +19,6 @@ services:
       - POSTGRES_PASSWORD=passwd
     networks:
       - db_network
-      
 
   radweb:
     build: ../
@@ -39,24 +38,21 @@ services:
     networks:
       - nginx_network
       - db_network
-    ports:
-      - "80:8000" # disable for prod
 
-  # for production use
-  # nginx:
-  #   restart: unless-stopped
-  #   image: jonasal/nginx-certbot
-  #   volumes:
-  #     - ./nginx/conf.d:/etc/nginx/conf.d:ro
-  #     - ./nginx/logs:/etc/nginx/logs
-  #     - letsencrypt:/etc/letsencrypt
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   environment:
-  #     - CERTBOT_EMAIL=some1@example.com
-  #   networks:
-  #     - nginx_network
+  nginx:
+    restart: unless-stopped
+    image: jonasal/nginx-certbot
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - letsencrypt:/etc/letsencrypt:rw
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - CERTBOT_EMAIL=some1@example.com
+      - STAGING=1
+    networks:
+      - nginx_network
 
 networks:
   nginx_network:
